@@ -57,7 +57,7 @@ var index = {
         });
     },
 
-    delete : function (0) {
+    delete : function () {
         var id = $('#id').val();
 
         $.ajax({
@@ -72,6 +72,7 @@ var index = {
             alert(JSON.stringify(error));
         });
     }
+
 };
 
 index.init();
