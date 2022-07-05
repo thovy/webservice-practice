@@ -1,5 +1,6 @@
 package com.prac.webservice.springboot.web;
 
+import com.prac.webservice.springboot.config.auth.LoginUser;
 import com.prac.webservice.springboot.config.auth.dto.SessionUser;
 import com.prac.webservice.springboot.service.posts.PostsService;
 import com.prac.webservice.springboot.web.dto.PostsResponseDto;
@@ -16,13 +17,26 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     private final PostsService postsService;
-    private final HttpSession httpSession;
+//    private final HttpSession httpSession;
+//
+//    @GetMapping("/")
+//    public String index(Model model) {
+//        model.addAttribute("posts", postsService.findAllDesc());
+//        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+//        if (user != null){
+//            model.addAttribute("userName", user.getName());
+//        }
+//        return "index";
+//    }
+    // 위는 HttpSession 개선 전
+    // 아래는 개선 후
+    // private 으로 선언된 httpSession 이 사라지고, index 메서드 안에 Session user 부분이 사라짐.
+    // index 메서드 파라미터로 @LoginUser 가 들어옴
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user){
         model.addAttribute("posts", postsService.findAllDesc());
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        if (user != null){
+        if (user != null) {
             model.addAttribute("userName", user.getName());
         }
         return "index";
